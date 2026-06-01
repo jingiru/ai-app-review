@@ -1,0 +1,95 @@
+import type { Review, Student, Submission } from "./types";
+
+export const mockStudents: Student[] = [
+  { studentId: "2403", name: "홍길동", classNo: "4" },
+  { studentId: "2407", name: "박서연", classNo: "4" },
+  { studentId: "2512", name: "이준호", classNo: "5" },
+  { studentId: "2715", name: "최민지", classNo: "7" },
+  { studentId: "2810", name: "김영희", classNo: "8" },
+  { studentId: "2818", name: "정도윤", classNo: "8" },
+];
+
+export const mockSubmissions: Submission[] = [
+  {
+    submissionId: "sub_2403",
+    studentId: "2403",
+    name: "홍길동",
+    classNo: "4",
+    title: "급식 메뉴 추천기",
+    description: "오늘의 기분에 맞춰 학교 급식 조합을 추천해 주는 웹앱입니다.",
+    appUrl: "https://example.com/lunch-picker",
+    createdAt: "2026-05-20 10:20",
+    updatedAt: "2026-05-28 14:10",
+  },
+  {
+    submissionId: "sub_2407",
+    studentId: "2407",
+    name: "박서연",
+    classNo: "4",
+    title: "공부 타이머",
+    description: "집중 시간과 쉬는 시간을 기록하고 오늘의 학습량을 보여줍니다.",
+    appUrl: "https://example.com/study-timer",
+    createdAt: "2026-05-21 11:00",
+    updatedAt: "2026-05-29 09:30",
+  },
+  {
+    submissionId: "sub_2512",
+    studentId: "2512",
+    name: "이준호",
+    classNo: "5",
+    title: "우리 반 퀴즈",
+    description: "수업 내용을 복습할 수 있는 짧은 객관식 퀴즈 앱입니다.",
+    appUrl: "https://example.com/class-quiz",
+    createdAt: "2026-05-22 15:40",
+    updatedAt: "2026-05-27 16:15",
+  },
+  {
+    submissionId: "sub_2715",
+    studentId: "2715",
+    name: "최민지",
+    classNo: "7",
+    title: "감정 일기장",
+    description: "하루 감정을 이모지로 남기고 한 주의 변화를 확인합니다.",
+    appUrl: "https://example.com/mood-diary",
+    createdAt: "2026-05-23 09:15",
+    updatedAt: "2026-05-30 12:20",
+  },
+  {
+    submissionId: "sub_2810",
+    studentId: "2810",
+    name: "김영희",
+    classNo: "8",
+    title: "자리 배치 도우미",
+    description: "모둠 활동에 맞춰 무작위로 자리를 배치합니다.",
+    appUrl: "https://example.com/seat-helper",
+    createdAt: "2026-05-24 13:25",
+    updatedAt: "2026-05-30 18:05",
+  },
+];
+
+export const mockReviews: Review[] = [
+  {
+    reviewId: "review_1",
+    submissionId: "sub_2403",
+    reviewerId: "2810",
+    reviewerName: "김영희",
+    content: "메뉴별 알레르기 정보를 함께 보여주면 더 편리할 것 같아요.",
+    createdAt: "2026-05-29 10:10",
+  },
+  {
+    reviewId: "review_2",
+    submissionId: "sub_2403",
+    reviewerId: "2512",
+    reviewerName: "이준호",
+    content: "추천 이유를 한 줄로 설명해 주면 친구들이 더 재미있게 사용할 수 있을 것 같습니다.",
+    createdAt: "2026-05-29 11:45",
+  },
+  {
+    reviewId: "review_3",
+    submissionId: "sub_2810",
+    reviewerId: "2407",
+    reviewerName: "박서연",
+    content: "같이 앉으면 안 되는 친구를 제외하는 옵션이 있으면 좋겠습니다.",
+    createdAt: "2026-05-30 19:00",
+  },
+];
