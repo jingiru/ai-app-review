@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, ReactNode, useState } from "react";
+import type { SessionUser } from "@/lib/types";
 import { isValidStudentId } from "@/lib/utils";
 
 type LoginModalProps = {
