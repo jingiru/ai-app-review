@@ -1,28 +1,35 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { Review, SortOption, Submission } from "@/lib/types";
+import type { Review, SortOption, Student, Submission } from "@/lib/types";
 import { getReviewCount, normalizeText, sortSubmissions } from "@/lib/utils";
 import { ClassFilter } from "./ClassFilter";
 import { EmptyState } from "./EmptyState";
 import { SubmissionCard } from "./SubmissionCard";
 
 type DashboardProps = {
+  students: Student[];
   submissions: Submission[];
   reviews: Review[];
   loading: boolean;
   search: string;
   sortBy: SortOption;
   onOpenReviews: (submission: Submission) => void;
+  onOpenMissingSubmissions: () => void;
 };
 
-export function Dashboard({ submissions, reviews, loading, search, sortBy, onOpenReviews }: DashboardProps) {
+export function Dashboard({ students, submissions, reviews, loading, search, sortBy, onOpenReviews, onOpenMissingSubmissions }: DashboardProps) {
   const [selectedClass, setSelectedClass] = useState("전체");
 
   const classes = useMemo(
     () => Array.from(new Set(submissions.map((submission) => submission.studentId.charAt(1) || submission.classNo).filter(Boolean))).sort((a, b) => Number(a) - Number(b)),
     [submissions],
   );
+
+  const missingCount = useMemo(() => {
+    const submittedStudentIds = new Set(submissions.map((submission) => submission.studentId));
+    return students.filter((student) => !submittedStudentIds.has(student.studentId)).length;
+  }, [students, submissions]);
 
   const filteredSubmissions = useMemo(() => {
     const keyword = normalizeText(search);
@@ -43,8 +50,17 @@ export function Dashboard({ submissions, reviews, loading, search, sortBy, onOpe
             <h2 className="text-xl font-black text-slate-950 dark:text-white">반별 필터</h2>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">학번의 둘째 자리 기준으로 반을 구분합니다.</p>
           </div>
-          <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-            총 {filteredSubmissions.length}개 표시
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={onOpenMissingSubmissions}
+              className="rounded-full bg-rose-50 px-4 py-2 text-sm font-black text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 dark:bg-rose-950 dark:text-rose-200 dark:ring-rose-900 dark:hover:bg-rose-900"
+            >
+              미제출 {missingCount}명 보기
+            </button>
+            <div className="rounded-full bg-slate-100 px-4 py-2 text-sm font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              총 {filteredSubmissions.length}개 표시
+            </div>
           </div>
         </div>
         <ClassFilter classes={classes} selectedClass={selectedClass} onSelect={setSelectedClass} />

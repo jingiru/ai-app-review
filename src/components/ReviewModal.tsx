@@ -57,7 +57,7 @@ export function ReviewModal({ submission, reviews, user, onClose, onRequireLogin
     }
   };
 
-  return <ModalShell title="리뷰 보기/남기기" onClose={onClose}>
+  return <ModalShell title="리뷰" onClose={onClose}>
     <div className="mb-5 rounded-3xl bg-slate-50 p-4 dark:bg-slate-800">
       <p className="text-sm font-bold text-blue-600 dark:text-blue-300">{submission.name} · {submission.studentId} · {submission.classNo}반</p>
       <h3 className="mt-1 text-xl font-black text-slate-950 dark:text-white">{getDisplayTitle(submission)}</h3>

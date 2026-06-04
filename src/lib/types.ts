@@ -36,6 +36,7 @@ export type ApiResponse<T> = {
 };
 
 export type DashboardData = {
+  students: Student[];
   submissions: Submission[];
   reviews: Review[];
   isMock: boolean;

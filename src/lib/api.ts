@@ -41,6 +41,7 @@ function writeLocal<T>(key: string, value: T) {
 
 export function getMockDashboard(): DashboardData {
   return {
+    students: mockStudents,
     submissions: readLocal(LOCAL_SUBMISSIONS_KEY, mockSubmissions),
     reviews: readLocal(LOCAL_REVIEWS_KEY, mockReviews),
     isMock: true,
@@ -50,11 +51,12 @@ export function getMockDashboard(): DashboardData {
 
 export async function fetchDashboardData(): Promise<DashboardData> {
   try {
-    const [submissions, reviews] = await Promise.all([
+    const [students, submissions, reviews] = await Promise.all([
+      callApi<Student[]>("getStudents"),
       callApi<Submission[]>("getSubmissions"),
       callApi<Review[]>("getReviews"),
     ]);
-    return { submissions, reviews, isMock: false };
+    return { students, submissions, reviews, isMock: false };
   } catch (error) {
     const fallback = getMockDashboard();
     return {
