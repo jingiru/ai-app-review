@@ -4,14 +4,16 @@ import { useEffect, useMemo, useState } from "react";
 import { Dashboard } from "@/components/Dashboard";
 import { Header } from "@/components/Header";
 import { LoginModal } from "@/components/LoginModal";
+import { MissingSubmissionsModal } from "@/components/MissingSubmissionsModal";
 import { ReviewModal } from "@/components/ReviewModal";
 import { SubmissionModal } from "@/components/SubmissionModal";
 import { addReview, fetchDashboardData, loginStudent, upsertSubmission } from "@/lib/api";
-import type { Review, SessionUser, SortOption, Submission } from "@/lib/types";
+import type { Review, SessionUser, SortOption, Student, Submission } from "@/lib/types";
 import { getClassNoFromStudentId, isUsableUrl, SESSION_STORAGE_KEY, THEME_STORAGE_KEY } from "@/lib/utils";
 
 export default function Home() {
   const [user, setUser] = useState<SessionUser | null>(null);
+  const [students, setStudents] = useState<Student[]>([]);
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +24,7 @@ export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [submissionOpen, setSubmissionOpen] = useState(false);
+  const [missingOpen, setMissingOpen] = useState(false);
   const [reviewTarget, setReviewTarget] = useState<Submission | null>(null);
 
   useEffect(() => {
@@ -31,6 +34,7 @@ export default function Home() {
     if (savedTheme === "dark") setDarkMode(true);
 
     fetchDashboardData().then((data) => {
+      setStudents(data.students);
       setSubmissions(data.submissions);
       setReviews(data.reviews);
       setIsMock(data.isMock);
@@ -109,11 +113,12 @@ export default function Home() {
           </div>
         )}
 
-        <Dashboard submissions={submissions} reviews={reviews} loading={loading} search={search} sortBy={sortBy} onOpenReviews={setReviewTarget} />
+        <Dashboard students={students} submissions={submissions} reviews={reviews} loading={loading} search={search} sortBy={sortBy} onOpenReviews={setReviewTarget} onOpenMissingSubmissions={() => setMissingOpen(true)} />
       </div>
 
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} onLogin={handleLogin} />
       <SubmissionModal open={submissionOpen} user={user} existingSubmission={existingSubmission} onClose={() => setSubmissionOpen(false)} onRequireLogin={openLoginFromModal} onSubmit={handleSubmission} />
+      <MissingSubmissionsModal open={missingOpen} students={students} submissions={submissions} onClose={() => setMissingOpen(false)} />
       <ReviewModal submission={reviewTarget} reviews={reviews} user={user} onClose={() => setReviewTarget(null)} onRequireLogin={openLoginFromModal} onAddReview={handleAddReview} />
     </main>
   );

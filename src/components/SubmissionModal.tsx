@@ -85,7 +85,7 @@ export function SubmissionModal({ open, user, existingSubmission, onClose, onReq
       {message && <p className="rounded-2xl bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 dark:bg-rose-950 dark:text-rose-200">{message}</p>}
       {success && <p className="rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-200">{success}</p>}
       <button disabled={loading} className="w-full rounded-2xl bg-blue-600 px-4 py-3 font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
-        {loading ? "저장 중..." : "제출 저장"}
+        {loading ? "저장 중..." : "저장"}
       </button>
     </form>
   </ModalShell>;
