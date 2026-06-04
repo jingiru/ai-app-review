@@ -67,15 +67,15 @@ export function Dashboard({ students, submissions, reviews, loading, search, sor
       </div>
 
       {loading ? (
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-96 animate-pulse rounded-[2rem] bg-slate-200/80 dark:bg-slate-800" />)}
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
+          {Array.from({ length: 6 }).map((_, index) => <div key={index} className="h-80 animate-pulse rounded-[1.75rem] bg-slate-200/80 dark:bg-slate-800" />)}
         </div>
       ) : submissions.length === 0 ? (
         <EmptyState title="아직 제출된 웹앱이 없습니다" description="학생들이 웹앱 링크를 제출하면 이곳에 카드로 표시됩니다." icon="🧑‍💻" />
       ) : filteredSubmissions.length === 0 ? (
         <EmptyState title="검색 결과가 없습니다" description="검색어 또는 반 필터를 바꿔 다시 확인해 보세요." />
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5">
           {filteredSubmissions.map((submission) => (
             <SubmissionCard key={submission.submissionId} submission={submission} reviewCount={getReviewCount(reviews, submission.submissionId)} onOpenReviews={onOpenReviews} />
           ))}
